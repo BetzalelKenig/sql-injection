@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/mssql/server
+
+RUN mkdir -p /opt/scripts
+
+COPY database.sql /opt/scripts
+
+ENV MSSQL_SA_PASSWORD=b37z7yyl!
+ENV ACCEPT_EULA=Y
+
+# RUN /opt/mssql/bin/sqlservr --accept-eula & sleep 30  & /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'b37z7yyl!' -d master -i /opt/scripts/database.sql 

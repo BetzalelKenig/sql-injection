@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  5q1:
+    image: server
+    container_name: server-5q1
+    restart: always
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    ports:
+      - 3322:3322
+      - 9229:9229
+    depends_on: 
+      - sql.db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./:/app
+    command: nodemon --exec 'node --inspect=0.0.0.0:9229 --require ts-node/register index.ts'
+  sql.db:
+    image: db
+    container_name: db
+    build:
+      context: .
+      dockerfile: ./Dockerfile-db
+    ports:
+      - "1433:1433"
+
